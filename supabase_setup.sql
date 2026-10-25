@@ -17,9 +17,13 @@ create table if not exists public.appointments (
   service         text not null,
   preferred_date  date not null,
   preferred_time  time not null,
+  best_time_to_reach text,                         -- Morning / Afternoon / Evening
   message         text,
   status          text not null default 'new'     -- new / confirmed / completed / cancelled
 );
+-- If the table already existed before, this adds the new column safely (run it once):
+alter table public.appointments add column if not exists best_time_to_reach text;
+
 alter table public.appointments enable row level security;
 
 -- 2) ADMINS TABLE + HELPERS ---------------------------------------------
